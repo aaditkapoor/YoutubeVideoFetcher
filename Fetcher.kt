@@ -27,7 +27,7 @@ fun ArrayList<String>.removeSpaces() : ArrayList<String> {
     Represents a single found source
     @param link the link
  */
-data class YoutubeVideoFetcher(var link:String) {
+data class YoutubeVideo(var link:String) {
     init {
         this.link = this.youtubeURL();
     }
@@ -39,9 +39,9 @@ data class YoutubeVideoFetcher(var link:String) {
  */
 class YouTubeFetcher() {
     companion object {
-        fun search(query:String) : ArrayList<YoutubeVideoFetcher>{
+        fun search(query:String) : ArrayList<YoutubeVideo>{
             var listOfLinks:ArrayList<String> = ArrayList<String>();
-            var ytubeVideoFetcher = ArrayList<YoutubeVideoFetcher>();
+            var ytubeVideoFetcher = ArrayList<YoutubeVideo>();
             var doc: Document = Jsoup.connect("https://www.youtube.com/results?search_query=${query}").userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
                 .referrer("http://www.google.com")
                 .get();
@@ -56,7 +56,7 @@ class YouTubeFetcher() {
             }
             listOfLinks = listOfLinks.removeSpaces()
             for (link in listOfLinks) {
-                ytubeVideoFetcher.add(YoutubeVideoFetcher(link))
+                ytubeVideoFetcher.add(YoutubeVideo(link))
             }
             return ytubeVideoFetcher;
         }
